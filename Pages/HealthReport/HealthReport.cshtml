@@ -1,0 +1,85 @@
+﻿@page
+@using FutureFridges.Business.StockManagement;
+@model FutureFridges.Pages.HealthReport.HealthReportModel
+@{
+    ViewData["Title"] = "Health Report";
+}
+
+<div class="container-sm m-auto bg-light rounded-3 border p-5 shadow-lg">
+    <div class="row">
+        <div class="col-sm">
+            <div class="display-4 text-center">Health Report</div>
+            <div class="display-6 text-center">@DateTime.Now</div>
+            <hr>
+            <table class="text-center" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>
+                            Product ID
+                        </th>
+                        <th>
+                            Product Name
+                        </th>
+                        <th>
+                            Expiry Date
+                        </th>
+                        <th>
+                            Time Past Expiry
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                        @foreach (StockItem stockItem in Model.StockItems)
+                        {
+                            TimeSpan ExpiryDiff = DateTime.Now.Subtract(stockItem.ExpiryDate);
+                            @if (stockItem.ExpiryDate < DateTime.Now)
+                            {
+                                Product _Product = Model.Products.Where(product => product.UID == stockItem.Product_UID).First();
+                                <tr>
+                                    <td>@stockItem.Item_UID</td>
+                                    <td>@_Product.Name</td>
+                                    <td>@stockItem.ExpiryDate</td>
+                                    <td>@ExpiryDiff.Days Day(s) @ExpiryDiff.Hours Hour(s) @ExpiryDiff.Minutes Minute(s)</td>
+                                </tr>
+                            }
+                        }
+                </tbody>
+            </table>
+            <hr>
+            <div class="mt-5">
+                <h3>Send Health Report</h3>
+                <form class="row" method="post" asp-page-handler="sendReport">
+                    <div>
+                        <label asp-for="@Model.SafetyOfficerEmail">Health And Safety Officer Email</label>
+                        <div class="col-sm-12">
+                            <input class="form-control" asp-for="@Model.SafetyOfficerEmail" placeholder="safetyofficer@email.com" />
+                        </div>
+                        <span class="text-danger" asp-validation-for="@Model.SafetyOfficerEmail"></span>
+                    </div>
+                    <div class="col-md-10">
+                        <button class="btn btn-lg btn-primary" type="submit" name="submit">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-sm m-auto">
+    @*Bootstrap Toast - Confirm Email Sent*@
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; top: 110px; right: 0;">
+        <div class="toast-header">
+            <strong class="me-auto">Success</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Health Report Email sent.
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript" src="~/Pages/HealthReport/HealthReport.cshtml.js"></script>
+}
+

@@ -1,0 +1,88 @@
+﻿@page
+@using FutureFridges.Business.StockManagement;
+@model FutureFridges.Pages.StockManagement.StockManagementModel
+@{
+    ViewData["Title"] = "Stock";
+}
+
+<div class="container m-auto bg-light rounded-3 border px-5 pb-5 pt-4 shadow-lg">
+    <h2 class="display-5">Manage Stock</h2>
+
+    <div class="display-6 row text-center p-3 text-muted" style="width: 100%;">
+        <span class="col-4">Product Name</span>
+        <span class="col-4">Product Category</span>
+        <span class="col-4">Quantity</span>
+    </div>
+
+    <div class="accordion" id="accordion">
+
+        @foreach (Product product in Model.Products)
+        {
+            int _Quantity = Model.StockItems.Where(stockItem => stockItem.Product_UID == product.UID).Count();
+
+            @if (_Quantity > 0)
+            {
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button @(Model.SelectedProduct.Name != product.Name ? "collapsed" : "")" type="button" data-bs-toggle="collapse" data-bs-target="#id-@product.UID" aria-expanded="true" aria-controls="collapseOne">
+                            <div class="row text-center w-100">
+                                <span class="col-4">@product.Name</span>
+                                <span class="col-4">@product.Category</span>
+                                <span class="col-4">@_Quantity</span>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="id-@product.UID" class="accordion-collapse collapse @(Model.SelectedProduct.Name == product.Name ? "show" : "")" aria-labelledby="headingOne" data-bs-parent="#accordion">
+                        <div class="accordion-body">
+                            <div class="col-lg-9 m-auto rounded-3 ">
+                                <img class="img-thumbnail" src="@($"{Model.ProductImagePath}{product.ImageName}")" style="width:300px; height: 150px; display: block; margin-left: auto; margin-right: auto;">
+                                <table class="text-center table table-bordered" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Stock Item ID
+                                        </th>
+                                        <th>
+                                            Expiry Date
+                                        </th>
+                                        <th>
+                                            Take
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (StockItem stockItem in Model.StockItems.Where(stockItem => stockItem.Product_UID == product.UID))
+                                    {
+                                        <tr>
+                                            <td>@stockItem.Id</td>
+                                            <td>@stockItem.ExpiryDate.ToShortDateString()</td>
+                                            @if (Model.CurrentUserPermissions.RemoveStock)
+                                            {
+                                                <td><a class="btn btn-danger" role="button" asp-page-handler="takeProduct" asp-route-uid="@stockItem.Item_UID">Take Item</a></td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            
+        }
+    </div>
+
+    <hr>
+
+    @if(Model.CurrentUserPermissions.AddStock)
+    {
+        <a class="btn btn-lg btn-primary" asp-page="AddStockItem">Insert Stock Item</a>
+    }
+
+</div>
+
+
+
+
+

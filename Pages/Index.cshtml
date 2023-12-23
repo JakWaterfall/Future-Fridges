@@ -1,0 +1,17 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1 class="display-2">Welcome</h1>
+            <p class="lead">Click to Enter the fridge!</p>
+        </div>
+    </div>
+    <div class="row">
+        <a asp-page="StockManagement/StockManagement"><img class="w-50 rounded mx-auto d-block" src="~/Images/FridgeHome.png" /></a>
+    </div>
+</div>
