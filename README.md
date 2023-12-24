@@ -45,29 +45,10 @@ We should use Models for every database item that is going to be represented wit
 ### Example Enum
 ![image](https://user-images.githubusercontent.com/34271471/194392033-71b6efd3-d02e-44bd-bb2e-d8ea242abea8.png)
 
+#### Login Screen
+<img src="https://github.com/JakWaterfall/Future-Fridges/assets/65239251/ea311496-babb-43c1-b4ea-f3b5d6c82bbe" width="75%" margin="50">
 
-## Variable Naming
-To ensure we are consistent throughout the work on this codebase we will follow these variable naming conventions:
-
-### Local Variables
-Local variables (variables within a particular method, etc) will be TitleCase and begin with a single underscore
-
-![image](https://user-images.githubusercontent.com/34271471/194390625-be389740-744e-4c48-ad4c-266b6a99057f.png)
-
-
-### Class Variables
-Class variables (variables defined at the top of a class) will be TitleCase and begin with two underscores
-
-![image](https://user-images.githubusercontent.com/34271471/194390794-0b94c888-4b16-4b10-9283-6541c7a57c3e.png)
-
-### Function/Method Parameters
-Parameters for methods/functions will be camelCase
-
-![image](https://user-images.githubusercontent.com/34271471/194391016-f402950a-fb53-4161-9da5-e9dc1082e1fb.png)
-
-### Constants
-Constants will be capitalised, with an underscore between words
-
-![image](https://user-images.githubusercontent.com/34271471/194391195-09f18a1d-5510-4bf0-ad0f-c2e64cf3cc02.png)
+#### Manage Stock UI
+<img src="https://github.com/JakWaterfall/Future-Fridges/assets/65239251/15393241-d40e-40df-881a-bd4d767cf301" width="75%">
 
 
